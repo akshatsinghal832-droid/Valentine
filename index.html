@@ -82,19 +82,27 @@ noBtn.addEventListener("mouseover", () => {
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 });
 
-// 🎵 Background music (plays on YES click)
+// 🎵 background music
 const bgMusic = new Audio("for-a-reason.mp3");
 bgMusic.loop = true;
 
 function yesClicked() {
-  bgMusic.play(); // ✅ allowed because it's user-triggered
+  // 🔥 play music first
+  bgMusic.play().then(() => {
+    console.log("Music playing");
+  }).catch(err => {
+    console.log("Play blocked:", err);
+  });
 
-  document.body.innerHTML = `
-    <div style="text-align:center; margin-top:15vh; font-family:Arial;">
-      <h1 style="color:#e6005c;">Yayyy! 💕💖</h1>
-      <p style="font-size:20px;">You just made my Valentine perfect ❤️</p>
-    </div>
-  `;
+  // ⏳ delay page change slightly (IMPORTANT)
+  setTimeout(() => {
+    document.body.innerHTML = `
+      <div style="text-align:center; margin-top:15vh; font-family:Arial;">
+        <h1 style="color:#e6005c;">Yayyy! 💕💖</h1>
+        <p style="font-size:20px;">You just made my Valentine perfect ❤️</p>
+      </div>
+    `;
+  }, 300);
 }
 
 // floating hearts 💖
@@ -107,6 +115,7 @@ for (let i = 0; i < 25; i++) {
   document.body.appendChild(heart);
 }
 </script>
+
 
 </body>
 </html>
